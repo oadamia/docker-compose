@@ -1,0 +1,21 @@
+# docker run -d 
+#     -p 27017:27017 
+#     --name mongodb 
+#     --network mongo-network       
+#     -e MONGO_INITDB_ROOT_USERNAME=admin
+#     -e MONGO_INITDB_ROOT_PASSWORD=password
+#     -v mongodb:/data/db \\n       mongo
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:

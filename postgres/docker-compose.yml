@@ -1,0 +1,41 @@
+# docker run -d 
+#     -p 5432:5432     
+#     --name postgres     
+#     --network postgres 
+#     --network-alias postgres     
+#     -v postgres-data:/var/lib/postgresql/data     
+#     -e POSTGRES_PASSWORD=password     
+      # postgres
+
+# docker run 
+#     -p 8001:80     
+#     --name pgadmin
+#     --network postgres 
+#     --network-alias postgres          
+#     -v pgadmin-data:/var/lib/pgadmin     
+#     -e 'PGADMIN_DEFAULT_EMAIL=oadamia@gmail.com'     
+#     -e 'PGADMIN_DEFAULT_PASSWORD=password'     
+#     dpage/pgadmin4
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 8001:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=oadamia@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+  
+volumes:
+  postgres-data:
+  pgadmin-data:
