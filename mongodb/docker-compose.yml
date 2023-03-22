@@ -6,16 +6,41 @@
 #     -e MONGO_INITDB_ROOT_PASSWORD=password
 #     -v mongodb:/data/db \\n       mongo
 
+# docker run -d
+#     -p 8081:8081
+#     --name mongo-mongo_express
+#     --network mongo-network
+#     -e ME_CONFIG_BASICAUTH_USERNAME=admin
+#     -e ME_CONFIG_BASICAUTH_PASSWORD=password
+#     -e ME_CONFIG_MONGODB_SERVER=mongodb
+#     -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+#     -e ME_CONFIG_MONGODB_ADMINPASSWORD=password
+#     mongo-express
+
+
 services:
   mongodb:
     image: mongo
     ports:
-      - 27017:27017
+      - 27017:27017 
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - mongodb:/data/db
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+    
 
 volumes:
   mongodb:
